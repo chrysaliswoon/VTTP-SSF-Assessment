@@ -103,6 +103,8 @@ public class NewsArticle {
         JsonReader reader = Json.createReader(strReader);
         return create(reader.readObject());
     }
+
+    
     public static NewsArticle create(JsonObject jo) {
         NewsArticle newsArticle = new NewsArticle();
         newsArticle.setId(jo.getString("id"));
