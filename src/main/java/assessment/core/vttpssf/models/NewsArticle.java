@@ -1,6 +1,7 @@
 package assessment.core.vttpssf.models;
 
 import java.io.StringReader;
+import java.util.List;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
@@ -16,7 +17,16 @@ public class NewsArticle {
     private String body;
     private String tags;
     private String categories;
+    private String[] favourites;
     
+
+    public String[] getFavourites() {
+        return favourites;
+    }
+
+    public void setFavourites(String[] favourites) {
+        this.favourites = favourites;
+    }
 
     public String getId() {
         return id;
@@ -98,13 +108,14 @@ public class NewsArticle {
         return articleData;
     }
 
+
     public static NewsArticle create(String jsonStr) {
         StringReader strReader = new StringReader(jsonStr);
         JsonReader reader = Json.createReader(strReader);
         return create(reader.readObject());
     }
 
-    
+//? Convert JSON object to Model
     public static NewsArticle create(JsonObject jo) {
         NewsArticle newsArticle = new NewsArticle();
         newsArticle.setId(jo.getString("id"));
@@ -119,6 +130,7 @@ public class NewsArticle {
         return newsArticle;
     }
 
+    //? Convert Model to JSON object
     public JsonObject toJson() {
         return Json.createObjectBuilder()
             .add("id", id)
@@ -132,5 +144,6 @@ public class NewsArticle {
 
             .build();
     }
+
 
 }

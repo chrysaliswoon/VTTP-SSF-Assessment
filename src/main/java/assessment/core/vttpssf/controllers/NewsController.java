@@ -1,5 +1,7 @@
 package assessment.core.vttpssf.controllers;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +42,12 @@ public class NewsController {
     //? POST Routes
     @PostMapping(path = "/articles")
     public String postArticles(Model model, @RequestBody MultiValueMap<String, String> form) {
+        List<String> favourites = new LinkedList<>();
 
-        String articleId = form.getFirst("checkbox");
-        System.out.println("Form data: " + articleId);
+        String checkboxData = form.getFirst("checkbox");
+        favourites.add(checkboxData);
+        model.addAttribute("favourites", favourites);
+        System.out.println("Form data: " + favourites);
 
         return "articles";
     } 

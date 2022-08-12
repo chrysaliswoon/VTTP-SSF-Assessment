@@ -99,7 +99,8 @@ public class NewsService {
             String articleTag = object.getString("tags");
             String articleCategory = object.getString("categories");
 
-            list.add(NewsArticle.createArticle(articleId, articleTitle, articleTag, publishDate, articleBody, articleCategory, articleUrl, imgUrl));
+            list.add(NewsArticle.createArticle(articleId, articleTitle, articleTag, publishDate, articleBody,
+                    articleCategory, articleUrl, imgUrl));
 
         }
         return list;
@@ -107,13 +108,13 @@ public class NewsService {
     }
 
     public List<NewsArticle> saveArticles() {
-        
+
         return null;
     }
 
     public Optional<NewsArticle> getNewsById(String id) {
         String result = newsRepo.get(id);
-        System.out.printf("Result: " + result);
+        //System.out.printf("Result: " + result);
 
         if (result == null)
             return Optional.empty();
