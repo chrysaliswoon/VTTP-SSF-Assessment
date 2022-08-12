@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import assessment.core.vttpssf.models.NewsArticle;
@@ -37,7 +39,10 @@ public class NewsController {
 
     //? POST Routes
     @PostMapping(path = "/articles")
-    public String postArticles(Model model) {
+    public String postArticles(Model model, @RequestBody MultiValueMap<String, String> form) {
+
+        String articleId = form.getFirst("checkbox");
+        System.out.println("Form data: " + articleId);
 
         return "articles";
     } 

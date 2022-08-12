@@ -1,5 +1,11 @@
 package assessment.core.vttpssf.models;
 
+import java.io.StringReader;
+
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
+
 public class NewsArticle {
 
     private String id;
@@ -10,6 +16,7 @@ public class NewsArticle {
     private String body;
     private String tags;
     private String categories;
+    
 
     public String getId() {
         return id;
@@ -89,6 +96,39 @@ public class NewsArticle {
         articleData.setCategories(articleCategory);
 
         return articleData;
+    }
+
+    public static NewsArticle create(String jsonStr) {
+        StringReader strReader = new StringReader(jsonStr);
+        JsonReader reader = Json.createReader(strReader);
+        return create(reader.readObject());
+    }
+    public static NewsArticle create(JsonObject jo) {
+        NewsArticle newsArticle = new NewsArticle();
+        newsArticle.setId(jo.getString("id"));
+        newsArticle.setPublished_on(jo.getString("published_on"));
+        newsArticle.setTitle(jo.getString("title"));
+        newsArticle.setUrl(jo.getString("url"));
+        newsArticle.setImageurl(jo.getString("imageurl"));
+        newsArticle.setBody(jo.getString("body"));
+        newsArticle.setTags(jo.getString("tags"));
+        newsArticle.setCategories(jo.getString("categories"));
+
+        return newsArticle;
+    }
+
+    public JsonObject toJson() {
+        return Json.createObjectBuilder()
+            .add("id", id)
+            .add("published_on", published_on)
+            .add("title", title)
+            .add("url", url)
+            .add("imageurl", imageurl)
+            .add("body", body)
+            .add("tags", tags)
+            .add("categories", categories)
+
+            .build();
     }
 
 }

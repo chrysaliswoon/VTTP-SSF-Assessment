@@ -22,13 +22,15 @@ public class NewsRespository {
     }
 
     // ? To get the articles info
-    public Optional<String> get(String articles) {
+    public String get(String id) {
         ValueOperations<String, String> valueOps = redisTemplate.opsForValue();
-        String value = valueOps.get(articles);
+        String value = valueOps.get(id);
 
-        if (null == value)
-            return Optional.empty(); // ? Empty box
-        return Optional.of(value); // ? Box with data
+        return value;
+
+        // if (null == value)
+        //     return Optional.empty(); // ? Empty box
+        // return Optional.of(value); // ? Box with data
 
     }
 }

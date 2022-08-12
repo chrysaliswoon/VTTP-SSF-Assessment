@@ -2,10 +2,13 @@ package assessment.core.vttpssf.services;
 
 import java.io.Reader;
 import java.io.StringReader;
+import java.lang.StackWalker.Option;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +21,13 @@ import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import assessment.core.vttpssf.models.NewsArticle;
+import assessment.core.vttpssf.repositories.NewsRespository;
 
 @Service
 public class NewsService {
+
+    @Autowired
+    private NewsRespository newsRepo;
 
     // ? API URL
     private static String apiUrl = "https://min-api.cryptocompare.com/data/v2/news/?lang=EN";
@@ -100,7 +107,16 @@ public class NewsService {
     }
 
     public List<NewsArticle> saveArticles() {
+        
         return null;
+    }
+
+    public Optional<NewsArticle> getNewsById(String id) {
+        String result = newsRepo.get(id);
+        if (null == result)
+        return Optional.empty();
+
+        return Optional.of(NewsArticle.create(result));
     }
 
 }
