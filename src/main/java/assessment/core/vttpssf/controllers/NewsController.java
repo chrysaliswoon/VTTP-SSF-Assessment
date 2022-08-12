@@ -24,7 +24,7 @@ public class NewsController {
     private NewsService newsSvc;
     
     //? GET Routes
-    @GetMapping(path={"/"})
+    @GetMapping(path={"/", "index"})
     public String getHomePage(Model model) {
         List<NewsArticle> articleResults = newsSvc.getArticles();
 
@@ -33,7 +33,7 @@ public class NewsController {
         return "index";
     }
 
-    @GetMapping(path={"/articles"})
+    @GetMapping(path="/articles")
     public String getSavedArticles(Model model) {
 
         return "articles";
@@ -49,6 +49,6 @@ public class NewsController {
         model.addAttribute("favourites", favourites);
         System.out.println("Form data: " + favourites);
 
-        return "articles";
+        return "redirect:/index";
     } 
 }
