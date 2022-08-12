@@ -19,29 +19,26 @@
       <h1>Crypto News of the Day</h1>
     </header>
 
-    <!-- <section>
-      <form action="/articles/{id}" method="POST">
+    <section>
+      <form action="/articles" method="POST">
         <button type="submit">Save</button>
       </form>
-    </section> -->
+    </section>
 
-    <!-- <div data-th-each="r: ${results}">
-        <p data-th-text="${r.Id}"></p>
+    <div></div>
 
-    </div> -->
-
-    <div data-th-each="r: ${results}" class="card" style="width: 18rem;">
-        <img src="" class="card-img-top" alt="...">
-        <!-- <div class="card-body"> -->
+    <div data-th-each="r: ${results}" class="card">
+        <img  data-th-src="@{${r.imageurl}}" class="card-img-left" alt="..." style="width: 50px; height: 50px">
             <p>Id: <span data-th-text="${r.Id}"></span></p>
             <h6 class="card-title">Article Title: <span data-th-text="${r.title}"></span></h6>
-            <a href="url">link text</a>
-            <img src="" alt="">
-            <p></p>
+            <p> <span data-th-text="${r.body}"></span></p>
+            <p>Categories: <span data-th-text="${r.categories}"></span></p>
             <p>Tags: <span data-th-text="${r.tags}"></span></p>
-            <p>Categories: <span></span></p>
-
-        <!-- </div> -->
+            <p>Published On: <span data-th-text="${r.published_on}"></span></p>
+            <a data-th-href="@{${r.url}}">Link to Article</a>
+            <form>
+                Save <input type="checkbox" name="save" id="save">
+            </form>
       </div>
 
 

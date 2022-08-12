@@ -81,22 +81,26 @@ public class NewsService {
             JsonObject object = cryptoData.getJsonObject(i);
 
             String articleId = object.getString("id");
-            // System.out.print(articleId);
 
-            // String publishDate = object.getString("published_on");
-            // Long publishDate = Long.parseLong(date);
+            Integer date = object.getInt("published_on");
+            String publishDate = Integer.toString(date);
+
             String articleTitle = object.getString("title");
-            // String articleUrl = object.getString("url");
-            // String imgUrl = object.getString("imageurl");
-            // String articleBody = object.getString("body");
+            String articleUrl = object.getString("url");
+            String imgUrl = object.getString("imageurl");
+            String articleBody = object.getString("body");
             String articleTag = object.getString("tags");
-            // String articleCategory = object.getString("categories");
+            String articleCategory = object.getString("categories");
 
-            list.add(NewsArticle.createArticle(articleId, articleTitle, articleTag));
+            list.add(NewsArticle.createArticle(articleId, articleTitle, articleTag, publishDate, articleBody, articleCategory, articleUrl, imgUrl));
 
         }
         return list;
 
+    }
+
+    public List<NewsArticle> saveArticles() {
+        return null;
     }
 
 }
