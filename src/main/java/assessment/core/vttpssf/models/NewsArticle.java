@@ -3,7 +3,7 @@ package assessment.core.vttpssf.models;
 public class NewsArticle {
 
     private String id;
-    private String published_on;
+    private Long published_on;
     private String title;
     private String url;
     private String imageurl;
@@ -19,11 +19,11 @@ public class NewsArticle {
         this.id = id;
     }
 
-    public String getPublished_on() {
+    public Long getPublished_on() {
         return published_on;
     }
 
-    public void setPublished_on(String published_on) {
+    public void setPublished_on(Long published_on) {
         this.published_on = published_on;
     }
 
@@ -75,18 +75,17 @@ public class NewsArticle {
         this.categories = categories;
     }
 
-    public static NewsArticle createCoinInfo(String articleId, String publishDate, String articleTitle,
-            String articleUrl, String imgUrl, String articleBody, String articleTag, String articleCategory) {
+    public static NewsArticle createArticle(String articleId, String articleTitle, String articleTag) {
         
                 NewsArticle articleData = new NewsArticle();
                 articleData.setId(articleId);
-                articleData.setPublished_on(publishDate);
+                // articleData.setPublished_on(publishDate);
                 articleData.setTitle(articleTitle);
-                articleData.setUrl(articleUrl);
-                articleData.setImageurl(imgUrl);
-                articleData.setBody(articleBody);
+                // articleData.setUrl(articleUrl);
+                // articleData.setImageurl(imgUrl);
+                // articleData.setBody(articleBody);
                 articleData.setTags(articleTag);
-                articleData.setCategories(articleCategory);
+                // articleData.setCategories(articleCategory);
 
         return articleData;
     }
