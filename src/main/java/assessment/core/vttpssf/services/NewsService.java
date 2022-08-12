@@ -5,6 +5,7 @@ import java.io.StringReader;
 import java.lang.StackWalker.Option;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -107,14 +108,64 @@ public class NewsService {
 
     }
 
-    public List<NewsArticle> saveArticles() {
 
-        return null;
+    //! The code for saveArticles is not working. For reference on how far I got
+    public List<NewsArticle> saveArticles(String articles) {
+        Optional<String> opt = newsRepo.get(id);
+        String payload;
+
+        if (opt.isEmpty()) {
+            System.out.println("Getting data from API");
+            try {
+                String url = UriComponentsBuilder.fromUriString(apiUrl)
+                        .queryParam("api_key", apiKey)
+                        .toUriString();
+                RequestEntity<Void> req = RequestEntity.get(url).build();
+                RestTemplate template = new RestTemplate();
+                ResponseEntity<String> resp;
+                resp = template.exchange(req, String.class);
+
+                payload = resp.getBody();
+                newsRepo.save(articles, payload);
+            } catch (Exception ex) {
+                System.err.printf("Error: %s\n", ex.getMessage());
+                return Collections.emptyList();
+            }
+
+        } else {
+            payload = opt.get();
+        }
+
+        Reader strReader = new StringReader(payload);
+        JsonReader jsonReader = Json.createReader(strReader);
+        JsonObject cryptoResult = jsonReader.readObject();
+        JsonArray cryptoData = cryptoResult.getJsonArray("Data");
+        List<NewsArticle> list = new LinkedList<>();
+        for (int i = 0; i < cryptoData.size(); i++) {
+            JsonObject object = cryptoData.getJsonObject(i);
+
+            String articleId = object.getString("id");
+
+            Integer date = object.getInt("published_on");
+            String publishDate = Integer.toString(date);
+
+            String articleTitle = object.getString("title");
+            String articleUrl = object.getString("url");
+            String imgUrl = object.getString("imageurl");
+            String articleBody = object.getString("body");
+            String articleTag = object.getString("tags");
+            String articleCategory = object.getString("categories");
+
+            list.add(NewsArticle.createArticle(articleId, articleTitle, articleTag, publishDate, articleBody,
+                    articleCategory, articleUrl, imgUrl));
+        }
+        return list;
+
     }
 
     public Optional<NewsArticle> getNewsById(String id) {
         String result = newsRepo.get(id);
-        //System.out.printf("Result: " + result);
+        // System.out.printf("Result: " + result);
 
         if (result == null)
             return Optional.empty();
