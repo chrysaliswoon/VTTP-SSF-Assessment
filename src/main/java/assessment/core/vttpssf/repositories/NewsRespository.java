@@ -1,7 +1,5 @@
 package assessment.core.vttpssf.repositories;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,21 +14,17 @@ public class NewsRespository {
     @Qualifier("redis")
     private RedisTemplate<String, String> redisTemplate;
 
+    //? Save data to Redis
     public void save(String articles, String payload) {
         ValueOperations<String, String> valueOps = redisTemplate.opsForValue();
         valueOps.set(articles, payload);
     }
 
+    //? Load data from Redis
     // ? To get the articles info
     public String get(String id) {
         ValueOperations<String, String> valueOps = redisTemplate.opsForValue();
-        String value = valueOps.get(id);
-
-        return value;
-
-        // if (null == value)
-        //     return Optional.empty(); // ? Empty box
-        // return Optional.of(value); // ? Box with data
+        return valueOps.get(id);
 
     }
 }

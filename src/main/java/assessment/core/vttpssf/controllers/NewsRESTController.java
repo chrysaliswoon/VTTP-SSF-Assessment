@@ -24,10 +24,12 @@ public class NewsRESTController {
     @Autowired
     private NewsService newsSvc;
 
-    @GetMapping(path = "{id}")
+    @GetMapping(value = "{id}")
     public ResponseEntity<String> getNewsArticle(@PathVariable String id) {
 
+
         Optional<NewsArticle> opt = newsSvc.getNewsById(id);
+        System.out.print(opt);
 
         if (opt.isEmpty()) {
             JsonObject err = Json.createObjectBuilder()

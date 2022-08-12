@@ -113,8 +113,10 @@ public class NewsService {
 
     public Optional<NewsArticle> getNewsById(String id) {
         String result = newsRepo.get(id);
-        if (null == result)
-        return Optional.empty();
+        System.out.printf("Result: " + result);
+
+        if (result == null)
+            return Optional.empty();
 
         return Optional.of(NewsArticle.create(result));
     }
